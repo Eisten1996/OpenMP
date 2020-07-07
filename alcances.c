@@ -11,6 +11,8 @@ int main(int argc, char **argv)
 #pragma omp parallel
     {
         printf("Hola mundo\n");
+        printf("%d\n", omp_get_thread_num);
+        // printf("%d\n", omp_get_num_threads);
     }
 
     omp_set_num_threads(8);

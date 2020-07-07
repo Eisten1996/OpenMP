@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <omp.h>
 
-#define N 50000
+#define N 100000
 
 void ceros(long n, int v[]);
 void iniciar(long n, int v[]);
@@ -25,10 +25,39 @@ int main()
     inicio = omp_get_wtime();
     sumar(0, N, a, b, c);
     termino = omp_get_wtime();
+    // imprimir(0, N, a, b, c);
     printf("Demoro %f segundos \n", termino - inicio);
-    // imprimir(0,10,a,b,c);
 
-    // en paralelo 1
+// en paralelo 1
+#pragma omp parallel
+    {
+        inicio = omp_get_wtime();
+
+#pragma omp for
+        for (int i = 1; i <= N; i++)
+        {
+            // if (omp_get_thread_num() == 0 && i > 0 && i <= N / 4)
+            // {
+            //     c[i] = a[i] + b[i];
+            // }
+            // else if (omp_get_thread_num() == 0 && i > N / 4 && i <= N / 2)
+            // {
+            //     c[i] = a[i] + b[i];
+            // }
+            // else if (omp_get_thread_num() == 0 && i > N / 2 && i <= 3 * N / 4)
+            // {
+            //     c[i] = a[i] + b[i];
+            // }
+            // else if (omp_get_thread_num() == 0 && i > 3 * N / 4 && i <= N)
+            // {
+            //     c[i] = a[i] + b[i];
+            // }
+            c[i] = a[i] + b[i];
+        }
+        termino = omp_get_wtime();
+    }
+    // imprimir(0, N, a, b, c);
+    printf("Demoro %f segundos \n", termino - inicio);
 
     // en paralelo forma 2
 
